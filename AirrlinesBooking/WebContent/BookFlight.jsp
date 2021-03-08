@@ -1,5 +1,9 @@
+<%@page import="com.air.Dao.MailDAO"%>
+<%@page import="com.air.models.FlightRegister"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -48,6 +52,8 @@
 
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 	
+	
+	
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -73,6 +79,23 @@
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
+	
+	<style type="text/css">
+	
+            th, td,tr{
+            	   
+                text-align:center; 
+                border:1px solid black;
+                padding:5px; 
+            
+            }
+            	
+            
+	
+	
+	
+	
+	</style>
 
 	</head>
 	<body>
@@ -107,6 +130,56 @@
 		<br><br>
 		<main>
 		
+		<%
+		MailDAO m=new MailDAO();
+		List<FlightRegister> l=m.ReadFlights();
+		request.setAttribute("list", l);
+		
+		
+		
+		%>
+		<div align="center" >
+		<table border="1">
+		<tr>
+		<th>Flight Id</th>
+		<th>Flight Name</th>
+		<th>From</th>
+		<th>To</th>
+		<th>Time</th>
+		<th>Date</th>
+		<th>Airport</th>
+		<th>Price</th>
+		<th>Details</th>
+		<th>Book</th>
+		
+		
+		
+		</tr>
+		<c:forEach items="${list}" var="l">
+		<tr>
+		<td><c:out value="${l.getFlightId() }"></c:out>  </td>
+		<td><c:out value="${l.getFlightName() }"></c:out>  </td>
+		<td><c:out value="${l.getFrom() }"></c:out>  </td>
+		<td><c:out value="${l.getTo() }"></c:out>  </td>
+		<td><c:out value="${l.getTime() }"></c:out>  </td>
+		<td><c:out value="${l.getDate() }"></c:out>  </td>
+		<td><c:out value="${l.getAirport() }"></c:out>  </td>
+		<td><c:out value="${l.getPrice() }"></c:out>  </td>
+		<td><c:out value="${l.getDetails() }"></c:out>  </td>
+		<td>  
+      
+       <a href="ConfirmingTickets.jsp?id=${l.getFlightId()}&name=${l.getFlightName()}&from=${l.getFrom() }&to=${l.getTo() }&time=${l.getTime() }&date=${l.getDate() }&price=${l.getPrice() }"><button>Book</button> </a>
+     
+    	
+    
+    
+
+ </td></tr>
+</c:forEach>
+				
+		</table>
+		
+		</div>
 		
 		
 		

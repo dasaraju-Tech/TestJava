@@ -1,5 +1,9 @@
+<%@page import="com.air.Dao.MailDAO"%>
+<%@page import="com.air.models.Contact"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -73,7 +77,18 @@
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
-
+<style type="text/css">
+	
+            th, td,tr{
+            	   
+                text-align:center; 
+                border:1px solid black;
+                padding:2px; 
+            
+            }
+           
+	
+	</style>
 	</head>
 	<body>
 		<div id="fh5co-wrapper">
@@ -133,9 +148,35 @@
  <br><br><br><br>
  
  	<main>
+		<%
+			MailDAO m=new MailDAO();
+			List<Contact> l=m.readContacts();
+			request.setAttribute("List", l);
 		
 		
+		%>
+		<div align="center">
+		<table>
+		<tr>
+		<th>Name</th>
+		<th>Email</th>
+		<th>Message</th>
 		
+		</tr>
+		<c:forEach items="${List}" var="l" >
+		<tr>
+		<td><c:out value="${l.getName() }"></c:out> </td>
+		<td><c:out value="${l.getEmail() }"></c:out> </td>
+		<td><c:out value="${l.getMessage() }"></c:out> </td>
+		
+		</tr>
+		
+		
+		</c:forEach>
+		
+		
+		</table>
+		</div>
 		
 		
 		</main>

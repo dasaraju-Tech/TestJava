@@ -1,6 +1,6 @@
-<%@page import="com.air.models.TicketBooking"%>
-<%@page import="java.util.List"%>
 <%@page import="com.air.Dao.MailDAO"%>
+<%@page import="com.air.models.FlightRegister"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
@@ -52,6 +52,8 @@
 
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 	
+	
+	
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -78,7 +80,7 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 	
-<style type="text/css">
+	<style type="text/css">
 	
             th, td,tr{
             	   
@@ -87,9 +89,14 @@
                 padding:5px; 
             
             }
-           
+            	
+            
+	
+	
+	
 	
 	</style>
+
 	</head>
 	<body>
 		<div id="fh5co-wrapper">
@@ -103,12 +110,14 @@
 					<!-- START #fh5co-menu-wrap -->
 					<nav id="fh5co-menu-wrap" role="navigation">
 						<ul class="sf-menu" id="fh5co-primary-menu">
-							<li><a href="AdminHome.jsp">Home</a></li>
+							<li><a href="index.html">Home</a></li>
 							
-							<li class="active"><a href="BookedFlightTickets.jsp">Booked tickets</a></li>
-							<li><a href="ContactedUsers.jsp">Contacted Users</a></li>
-							<li><a href="FlightRegister.jsp">Flights</a>
-							<li><a href="LogoutServlet">Logout</a></li>
+							<li   class="active"><a href="Flights.jsp">Flights</a></li>
+							
+							<li><a href="blog.html">Blog</a></li>
+							<li><a href="contact.html">Contact</a></li>
+							<li><a href="UserLogin.jsp">User Login</a>
+							<li><a href="AdminLogin.jsp">Admin Login</a></li>
 							
 						</ul>
 					</nav>
@@ -117,87 +126,58 @@
 		</header>
 
 		<!-- end:header-top -->
-	<!-- 
-		<div class="fh5co-hero">
-			<div class="fh5co-overlay"></div>
-			<div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/cover_bg_1.jpg);">
-				<div class="desc">
-					<div class="container">
-						<div class="row">
-														
-							
-								<div class="col-sm-7 col-sm-push-1 col-md-7 col-md-push-1">
-									<h3>Please login</h3>
-									<h3>to book or cancel </h3>
-									<h3>your flight tickets</h3>
-									
-									<p><a class="btn btn-primary btn-lg" href="#">Get Started</a></p>
-								</div>
-								
-							
-							</div>	
-						</div>
-					</div>
-				</div>
-			</div>
-
+	
+		
 		
 		<br><br>
+		<main>
 		
- -->	
- <br><br><br><br>
- 
- 	<main>
 		<%
-			MailDAO m=new MailDAO();
-			List<TicketBooking> list = m.ViewTickets();
-			request.setAttribute("List", list);
-			
+		MailDAO m=new MailDAO();
+		List<FlightRegister> l=m.ReadFlights();
+		request.setAttribute("list", l);
+		
+		
 		
 		%>
-		
 		<div align="center" >
-		<h2>Booked Flight Tickets</h2>
-		<table>
+		<table border="1">
 		<tr>
-		<th>Passenger name</th>
-		<th>Flight Name</th>
 		<th>Flight Id</th>
-		<th>Gender </th>
-		<th>age</th>
-		<th>User Name</th>
+		<th>Flight Name</th>
+		<th>From</th>
+		<th>To</th>
+		<th>Time</th>
+		<th>Date</th>
+		<th>Airport</th>
+		<th>Price</th>
+		<th>Details</th>
 		
-		<th>Cancellation</th>
+		
 		
 		</tr>
-		<c:forEach items="${List}" var="l" > 
+		<c:forEach items="${list}" var="l">
 		<tr>
-		<td><c:out value="${l.getName() }"></c:out></td>
-		<td><c:out value="${l.getFlightName() }"></c:out> </td>
-		<td><c:out value="${l.getFlightId() }"></c:out> </td>
-		<td><c:out value="${l.getGender() }"></c:out> </td>
-		<td><c:out value="${l.getAge() }"></c:out> </td>
-		<td><c:out value="${l.getUserName() }"></c:out> </td>
-	
-		<td><a href="CancelTicket?username=${l.getUserName() }"><button>Cancel</button>  </a>		
+		<td><c:out value="${l.getFlightId() }"></c:out>  </td>
+		<td><c:out value="${l.getFlightName() }"></c:out>  </td>
+		<td><c:out value="${l.getFrom() }"></c:out>  </td>
+		<td><c:out value="${l.getTo() }"></c:out>  </td>
+		<td><c:out value="${l.getTime() }"></c:out>  </td>
+		<td><c:out value="${l.getDate() }"></c:out>  </td>
+		<td><c:out value="${l.getAirport() }"></c:out>  </td>
+		<td><c:out value="${l.getPrice() }"></c:out>  </td>
+		<td><c:out value="${l.getDetails() }"></c:out>  </td>
 		</tr>
-		 </c:forEach>
-		
-		
-		
-		
-		
-		
+</c:forEach>
+				
 		</table>
 		
 		</div>
 		
 		
 		
-		
 		</main>
-		
-				<footer>
+			<footer>
 				<br><br>
 			<div id="footer">
 				<div class="container">
@@ -308,3 +288,4 @@
 	</body>
 </html>
 
+		

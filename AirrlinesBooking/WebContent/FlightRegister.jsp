@@ -1,5 +1,9 @@
+<%@page import="com.air.models.FlightRegister"%>
+<%@page import="java.util.List"%>
+<%@page import="com.air.Dao.MailDAO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -79,8 +83,15 @@ input , select,textarea {
 	
 
 }
-
-
+	
+            th, td,tr{
+            	   
+                text-align:center; 
+                border:1px solid black;
+                padding:5px; 
+            
+            }
+            	
 </style>
 
 
@@ -144,6 +155,49 @@ input , select,textarea {
  <br><br><br><br>
  
  	<main>
+ 	<%
+		MailDAO m=new MailDAO();
+		List<FlightRegister> l=m.ReadFlights();
+		request.setAttribute("list", l);
+		
+		
+		
+		%>
+		<div align="center" >
+		<table border="1">
+		<tr>
+		<th>Flight Id</th>
+		<th>Flight Name</th>
+		<th>From</th>
+		<th>To</th>
+		<th>Time</th>
+		<th>Date</th>
+		<th>Airport</th>
+		<th>Price</th>
+		<th>Details</th>
+		<th>Remove Flights</th>
+		</tr>
+		<c:forEach items="${list}" var="l">
+		<tr>
+		<td><c:out value="${l.getFlightId() }"></c:out>  </td>
+		<td><c:out value="${l.getFlightName() }"></c:out>  </td>
+		<td><c:out value="${l.getFrom() }"></c:out>  </td>
+		<td><c:out value="${l.getTo() }"></c:out>  </td>
+		<td><c:out value="${l.getTime() }"></c:out>  </td>
+		<td><c:out value="${l.getDate() }"></c:out>  </td>
+		<td><c:out value="${l.getAirport() }"></c:out>  </td>
+		<td><c:out value="${l.getPrice() }"></c:out>  </td>
+		<td><c:out value="${l.getDetails() }"></c:out>  </td>
+	    <td> <a href="RemoveFlight?id=${l.getFlightId()}"><button>Delete</button> </a> </td>
+      </tr>
+</c:forEach>
+				
+		</table>
+		
+		</div>
+		<br><br><br>
+		<hr><hr>
+ 	
 		<div class="container" align="center" style="width: 40%;">
 								
 								<form action="FlightRegisterServlet" style="width: 90%;">

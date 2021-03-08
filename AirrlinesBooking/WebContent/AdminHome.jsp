@@ -133,7 +133,18 @@
  <br><br><br><br>
  
  	<main>
+ 	<%
+ 	
+	HttpSession s=request.getSession();
+	String admin=(String)s.getAttribute("login");
+	
+	%>
+ 	
+ 
+		<div align="center" >
+		<h1>Welcome  <%=admin %> </h1>
 		
+		</div>
 		
 		
 		

@@ -8,22 +8,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.air.Dao.MailDAO;
-import com.air.models.Users;
+import com.air.models.Contact;
 
 /**
- * Servlet implementation class LoginUserServet
+ * Servlet implementation class ContactServlet
  */
-@WebServlet("/LoginUserServet")
-public class LoginUserServet extends HttpServlet {
+@WebServlet("/ContactServlet")
+public class ContactServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginUserServet() {
+    public ContactServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,34 +32,25 @@ public class LoginUserServet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		MailDAO m =new MailDAO();
-		String user=request.getParameter("username");
-		String pass=request.getParameter("password");
+		Contact c= new Contact();
+		MailDAO m=new MailDAO();
+		String aadhar=request.getParameter("id");
+		c.setName(request.getParameter("name"));
+		c.setEmail(request.getParameter("email"));
+		c.setMessage(request.getParameter("message"));
 		
 		try {
-			Users us = m.LoginUser(user);
-			System.out.println(user);
-			System.out.println(pass);
-			System.out.println(us.getUsername());
-			System.out.println(us.getPassword());
-			if(user.equals(us.getUsername())) {
-				System.out.println("here user");
-				if(pass.equals(us.getPassword())){
-					System.out.println("pass");
-					HttpSession session=request.getSession();
-					session.setAttribute("user", user);
-			
-					request.getRequestDispatcher("UserHome.jsp").forward(request, response);
-				}
-				else {
-					request.getRequestDispatcher("UserLogin.jsp").forward(request, response);
-				}
+			m.Contact(c);
+			if(aadhar.equals("")) {
+			request.getRequestDispatcher("contact.html").forward(request, response);
 			}
 			else {
-				request.getRequestDispatcher("UserLogin.jsp").forward(request, response);
+				request.getRequestDispatcher("CancelFlight.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			request.getRequestDispatcher("contact.html").forward(request, response);
+
 			e.printStackTrace();
 		}
 		

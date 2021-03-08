@@ -101,22 +101,21 @@
 		</header>
 
 		<!-- end:header-top -->
+		<%
+		HttpSession s=request.getSession();
+		String user=(String)s.getAttribute("user");
+		
+		%>
 	
 		<div class="fh5co-hero">
 			<div class="fh5co-overlay"></div>
 			<div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/cover_bg_1.jpg);">
 				<div class="desc">
-					<div class="container">
+					<div class="container" align="center">
 						<div class="row">
 														
-							
-								<div class="col-sm-7 col-sm-push-1 col-md-7 col-md-push-1">
-									<h3>Please login</h3>
-									<h3>to book or cancel </h3>
-									<h3>your flight tickets</h3>
-									
-									<!-- <p><a class="btn btn-primary btn-lg" href="#">Get Started</a></p> -->
-								</div>
+							<h1>welcome our beloved  <%=user %>  </h1>
+								
 								
 							
 							</div>	

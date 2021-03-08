@@ -1,6 +1,6 @@
-<%@page import="com.air.models.TicketBooking"%>
-<%@page import="java.util.List"%>
 <%@page import="com.air.Dao.MailDAO"%>
+<%@page import="com.air.models.FlightRegister"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
@@ -52,6 +52,8 @@
 
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 	
+	
+	
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
 	<!-- Icomoon Icon Fonts-->
@@ -78,7 +80,7 @@
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
 	
-<style type="text/css">
+	<style type="text/css">
 	
             th, td,tr{
             	   
@@ -87,9 +89,19 @@
                 padding:5px; 
             
             }
-           
+            	
+            
+input , select {
+	width:100%;
+	
+
+}
+	
+	
+	
 	
 	</style>
+
 	</head>
 	<body>
 		<div id="fh5co-wrapper">
@@ -103,11 +115,11 @@
 					<!-- START #fh5co-menu-wrap -->
 					<nav id="fh5co-menu-wrap" role="navigation">
 						<ul class="sf-menu" id="fh5co-primary-menu">
-							<li><a href="AdminHome.jsp">Home</a></li>
+							<li><a href="UserHome.jsp">Home</a></li>
 							
-							<li class="active"><a href="BookedFlightTickets.jsp">Booked tickets</a></li>
-							<li><a href="ContactedUsers.jsp">Contacted Users</a></li>
-							<li><a href="FlightRegister.jsp">Flights</a>
+							<li class="active"><a href="BookFlight.jsp">Book Flight</a></li>
+							
+							<li><a href="CancelFlight.jsp">Cancel Flight</a></li>
 							<li><a href="LogoutServlet">Logout</a></li>
 							
 						</ul>
@@ -117,78 +129,61 @@
 		</header>
 
 		<!-- end:header-top -->
-	<!-- 
-		<div class="fh5co-hero">
-			<div class="fh5co-overlay"></div>
-			<div class="fh5co-cover" data-stellar-background-ratio="0.5" style="background-image: url(images/cover_bg_1.jpg);">
-				<div class="desc">
-					<div class="container">
-						<div class="row">
-														
-							
-								<div class="col-sm-7 col-sm-push-1 col-md-7 col-md-push-1">
-									<h3>Please login</h3>
-									<h3>to book or cancel </h3>
-									<h3>your flight tickets</h3>
-									
-									<p><a class="btn btn-primary btn-lg" href="#">Get Started</a></p>
-								</div>
-								
-							
-							</div>	
-						</div>
-					</div>
-				</div>
-			</div>
-
+	
+		
 		
 		<br><br>
+		<main>
 		
- -->	
- <br><br><br><br>
- 
- 	<main>
-		<%
-			MailDAO m=new MailDAO();
-			List<TicketBooking> list = m.ViewTickets();
-			request.setAttribute("List", list);
-			
-		
-		%>
-		
-		<div align="center" >
-		<h2>Booked Flight Tickets</h2>
-		<table>
-		<tr>
-		<th>Passenger name</th>
-		<th>Flight Name</th>
-		<th>Flight Id</th>
-		<th>Gender </th>
-		<th>age</th>
-		<th>User Name</th>
-		
-		<th>Cancellation</th>
-		
-		</tr>
-		<c:forEach items="${List}" var="l" > 
-		<tr>
-		<td><c:out value="${l.getName() }"></c:out></td>
-		<td><c:out value="${l.getFlightName() }"></c:out> </td>
-		<td><c:out value="${l.getFlightId() }"></c:out> </td>
-		<td><c:out value="${l.getGender() }"></c:out> </td>
-		<td><c:out value="${l.getAge() }"></c:out> </td>
-		<td><c:out value="${l.getUserName() }"></c:out> </td>
+	<%
+		String flightId = request.getParameter("id");	
+		String FlightName = request.getParameter("name");
+		String from=request.getParameter("from");
+		String to=request.getParameter("to");
+		String time=request.getParameter("time");
+		String date=request.getParameter("date");
+		int price=Integer.parseInt(request.getParameter("price"));
+		HttpSession s=request.getSession();
+		String userNAme=(String)s.getAttribute("user");
+		System.out.println(userNAme);
 	
-		<td><a href="CancelTicket?username=${l.getUserName() }"><button>Cancel</button>  </a>		
-		</tr>
-		 </c:forEach>
+	
+	%>
+	<div class="container" align="center" style="width:40%;" >
+	
+		<h2>Welcome to <%=FlightName %> Airlines Mr.<%=userNAme %> . please fill these details to book your tickets
+		</h2>
+		<form action="BookedFlightTcikets">
+		<div align="left" >
+		<label>Passenger name</label>
+		<input name="passenger" type="text" placeholder="Enter passenger name" ><br>
+		<label>Gender</label><br>
+		<select name="gender">
+		<option value="male">Male</option>
+		<option value="female">Female</option>
+		<option value="others">Others</option>
+		</select><br>
+		<label>Age</label><br>
+		<input type="number" name="age" placeholder="Enter your age"><br>
+		<label>Aadhar card number</label>
+		<input type="text" name="aadhar" placeholder="Enter your Aadhar number"><br>
+		<label>Price</label><br>
+		<input value="<%=price %>" name="price" type="text"><br>
+		<label>User Name</label>
+		<input value="<%=userNAme %>" name="user" type="text"><br>
+		<label>Flight Name</label>
+		<input value="<%=FlightName %>" name="flightname" type="text"><br>
+		<label>Flight Id</label>
+		<input value="<%=flightId %>" name="flightid" type="text"><br><br>
+		</div>
+		<div align="center" style="width:20%;">
+		<input type="submit" value="submit">
+		
+		</div>
 		
 		
 		
-		
-		
-		
-		</table>
+		</form>
 		
 		</div>
 		
@@ -196,8 +191,7 @@
 		
 		
 		</main>
-		
-				<footer>
+			<footer>
 				<br><br>
 			<div id="footer">
 				<div class="container">
@@ -308,3 +302,4 @@
 	</body>
 </html>
 
+		

@@ -89,7 +89,7 @@
 						<ul class="sf-menu" id="fh5co-primary-menu">
 							<li><a href="index.html">Home</a></li>
 							
-							<li><a href="flight.html">Flights</a></li>
+							<li><a href="Flights.jsp">Flights</a></li>
 							
 							<li><a href="blog.html">Blog</a></li>
 							<li><a href="contact.html">Contact</a></li>
