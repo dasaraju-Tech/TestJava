@@ -8,7 +8,11 @@
 </head>
 <body>
 Result is : ${result}
-
+<br>
+id : ${result.getId()}
+<br>
+name : ${result.getName()} 
+<br>
 welcome mr ${name}
 </body>
 </html>

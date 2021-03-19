@@ -41,6 +41,9 @@ public class HomeController {
 	
 	@RequestMapping("addAlien")
 	public String addAlien(@ModelAttribute("result") Alien a) {
+		System.out.println(a);
+		System.out.println(a.getId());
+		System.out.println(a.getName());
 		return "result";
 		
 	}
