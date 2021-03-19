@@ -46,6 +46,7 @@ public class UserRegistrationControl extends HttpServlet {
 			request.getRequestDispatcher("UserLogin.jsp").forward(request, response);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			request.getRequestDispatcher("UserLogin.jsp").forward(request, response);
 			e.printStackTrace();
 		}
 		
